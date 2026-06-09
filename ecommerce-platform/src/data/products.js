@@ -5,6 +5,7 @@ export const products = [
     price: 699000,
     description: 'Ringan, nyaman, dan cocok untuk pemakaian sehari-hari.',
     category: 'Shoes',
+    image: 'https://via.placeholder.com/400x300?text=Running+Shoes',
   },
   {
     id: 'product-002',
@@ -12,6 +13,7 @@ export const products = [
     price: 299000,
     description: 'Tas ransel modern dengan banyak kompartemen.',
     category: 'Accessories',
+    image: 'https://via.placeholder.com/400x300?text=Backpack',
   },
   {
     id: 'product-003',
@@ -19,5 +21,30 @@ export const products = [
     price: 1299000,
     description: 'Monitor kesehatan dan notifikasi pintar dalam satu perangkat.',
     category: 'Wearables',
+    image: 'https://via.placeholder.com/400x300?text=Smart+Watch',
   },
-]
+  {
+    id: 'product-004',
+    name: 'Wireless Earbuds',
+    price: 549000,
+    description: 'Suara jernih dengan daya tahan baterai yang panjang.',
+    category: 'Audio',
+    image: 'https://via.placeholder.com/400x300?text=Earbuds',
+  },
+  {
+    id: 'product-005',
+    name: 'Travel Duffel Bag',
+    price: 399000,
+    description: 'Ringan dan kuat, sempurna untuk perjalanan singkat.',
+    category: 'Bags',
+    image: 'https://via.placeholder.com/400x300?text=Duffel+Bag',
+  },
+  {
+    id: 'product-006',
+    name: 'Portable Charger',
+    price: 229000,
+    description: 'Power bank compact untuk menjaga perangkat tetap hidup.',
+    category: 'Accessories',
+    image: 'https://via.placeholder.com/400x300?text=Power+Bank',
+  },
+];

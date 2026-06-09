@@ -1,16 +1,24 @@
-import { products } from '../data/products'
-import { useCartStore } from '../features/cart/store/cartStore'
+import { products } from '../data/products';
+import { useCartContext } from '../context/CartContext';
+import Toast from '../components/UI/Toast';
+import { useState } from 'react';
 
 function formatCurrency(value) {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
     maximumFractionDigits: 0,
-  }).format(value)
+  }).format(value);
 }
 
 export default function ProductsPage() {
-  const addItem = useCartStore((state) => state.addItem)
+  const { addItem } = useCartContext();
+  const [toast, setToast] = useState({ show: false, message: '' });
+
+  function handleAdd(product) {
+    addItem(product);
+    setToast({ show: true, message: `${product.name} telah ditambahkan ke keranjang` });
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 py-16">
@@ -26,28 +34,47 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {products.map((product) => (
-            <article key={product.id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-6 h-48 rounded-3xl bg-primary-50 p-6 text-primary-700">
-                <p className="text-xs uppercase tracking-[0.2em]">{product.category}</p>
-                <h2 className="mt-8 text-2xl font-bold text-slate-900">{product.name}</h2>
+            <article
+              key={product.id}
+              className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="relative overflow-hidden bg-slate-100">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="h-56 w-full object-cover object-center"
+                />
               </div>
-              <p className="text-gray-600 mb-6">{product.description}</p>
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <span className="text-2xl font-semibold text-slate-900">{formatCurrency(product.price)}</span>
-                <button
-                  type="button"
-                  onClick={() => addItem(product)}
-                  className="rounded-2xl bg-primary-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-700"
-                >
-                  Tambah ke Keranjang
-                </button>
+              <div className="p-6">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                  {product.category}
+                </p>
+                <h2 className="mt-4 text-2xl font-semibold text-slate-900">{product.name}</h2>
+                <p className="mt-3 text-sm leading-6 text-slate-600">{product.description}</p>
+                <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-2xl font-semibold text-slate-900">
+                    {formatCurrency(product.price)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleAdd(product)}
+                    className="rounded-2xl bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-700"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </article>
           ))}
         </div>
+        <Toast
+          message={toast.message}
+          show={toast.show}
+          onClose={() => setToast({ show: false, message: '' })}
+        />
       </div>
     </div>
-  )
+  );
 }
