@@ -10,6 +10,8 @@ import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { CartProvider } from './context/CartContext';
+import RegisterSellerPage from './features/auth/RegisterSellerPage';
+import SellerAddProductPage from './features/product/SellerAddProductPage';
 
 export default function App() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -23,6 +25,16 @@ export default function App() {
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register-seller" element={<RegisterSellerPage />} />
+            <Route
+              path="/seller/add-product"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <SellerAddProductPage />
+                </ProtectedRoute>
+              }
+            />
+
             <Route
               path="/profile"
               element={

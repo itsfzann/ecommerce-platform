@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ordersService } from '../../api/services';
+import { useCartStore } from '../../features/cart/store/cartStore';
 
 export default function CheckoutModal({
   open = false,
@@ -6,6 +8,9 @@ export default function CheckoutModal({
   onClose = () => {},
   onConfirm = () => {},
 }) {
+  const clearCart = useCartStore((state) => state.clearCart);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   if (!open) return null;
 
   return (
@@ -49,8 +54,23 @@ export default function CheckoutModal({
         <div className="mt-6 flex gap-3">
           <button
             type="button"
-            onClick={() => {
-              onConfirm();
+            onClick={async () => {
+              if (isSubmitting) return;
+              setIsSubmitting(true);
+              try {
+                await ordersService.checkout({
+                  // optional, schema sudah ada shipping/billing addresses
+                  shipping_address_id: null,
+                  billing_address_id: null,
+                  notes: null,
+                });
+                clearCart();
+                onConfirm();
+              } catch (err) {
+                console.error(err);
+              } finally {
+                setIsSubmitting(false);
+              }
             }}
             className="flex-1 rounded-2xl bg-primary-600 px-4 py-3 font-semibold text-white transition hover:bg-primary-700"
           >

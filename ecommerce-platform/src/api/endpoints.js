@@ -26,9 +26,15 @@ export const endpoints = {
 
   // Orders
   ORDERS: {
+    CHECKOUT: '/orders/checkout',
     CREATE: '/orders',
     LIST: '/orders',
     DETAIL: (id) => `/orders/${id}`,
+  },
+
+  // Seller
+  SELLER: {
+    REGISTER_PRODUCT: '/seller/products',
   },
 
   // User
@@ -40,4 +46,4 @@ export const endpoints = {
     ADDRESS_UPDATE: (id) => `/user/addresses/${id}`,
     ADDRESS_DELETE: (id) => `/user/addresses/${id}`,
   },
-}
+};

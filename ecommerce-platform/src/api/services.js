@@ -4,6 +4,7 @@ import { endpoints } from './endpoints';
 export const authService = {
   login: (payload) => client.post(endpoints.AUTH.LOGIN, payload),
   register: (payload) => client.post(endpoints.AUTH.REGISTER, payload),
+  registerSeller: (payload) => client.post('/auth/register-seller', payload),
   me: () => client.get(endpoints.AUTH.ME),
   logout: () => client.post(endpoints.AUTH.LOGOUT),
 };
@@ -19,4 +20,13 @@ export const cartService = {
     client.post(endpoints.CART.ADD, { product_id: productId, quantity }),
   updateItem: (itemId, quantity) => client.patch(endpoints.CART.UPDATE(itemId), { quantity }),
   removeItem: (itemId) => client.delete(endpoints.CART.REMOVE(itemId)),
+};
+
+export const ordersService = {
+  checkout: (payload) => client.post(endpoints.ORDERS.CHECKOUT, payload),
+  // other order endpoints could be added later
+};
+
+export const sellerService = {
+  addProduct: (payload) => client.post('/seller-products', payload),
 };

@@ -11,6 +11,8 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '12h';
 router.post('/register', async (req, res) => {
   const { email, password, name, phone } = req.body;
 
+  // (customer register)
+
   if (!email || !password) {
     return res.status(400).json({ message: 'Email and password are required' });
   }
